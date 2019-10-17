@@ -14,17 +14,18 @@ int main(int argc, char *argv[])
   double c5; /* for frequency of Middle C */
   double frequency; /* ... which we want to find */
   int midinote; /* given this note */
+  double cm;
+  double c5cm;
+  double c0cm;
+
 
   semitone_ratio = pow(2, 1/12.0); /* approx 1.0594631 */
   /* find middle C, three semitones above low A = 220 */
   c5 = 220.0 * pow(semitone_ratio, 3);
   /* MIDI Note 0 is C, 5 octaves below Middle C */
   c0 = c5 * pow(0.5, 5);
-
-  /*Exercise 1.2.5
-  (a) The sounding length of a string sounding C4 (‘‘middle C’’) is given as 660 cm. Modify listing 1.2 to print out the lengths of string required for each semitone up to the next octave (C5, 330 cm).
-  (b) What further language facilities would make this task easier?
-  */
+  c5cm = 660.0;
+  c0cm = c5cm * pow(2, 5);
 
   /* find nearest MIDI note to a given frequency in Hz */
   /* uses the log rule:
@@ -35,7 +36,9 @@ int main(int argc, char *argv[])
   fracmidi = log(frequency / c0) / log(semitone_ratio);
   /* round fracmidi to the nearest whole number */
   midinote = (int) (fracmidi + 0.5);
+  cm = c0cm / pow(semitone_ratio, midinote);
   printf("The nearest MIDI note to the frequency %f is %d\n", frequency, midinote);
+  printf("The nearest string length of the frequency %f is %f cm\n", frequency, cm);
 
   return 0;
 }
