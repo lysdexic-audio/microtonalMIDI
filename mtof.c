@@ -5,8 +5,23 @@
 
 int main(int argc, char *argv[])
 {
-  if (argc != 2) { printf("usage: ./ftom <MIDInote>\n"); return 1; }
+  if (argc != 3)
+  {
+    printf("usage: ./ftom <MIDInote> <rootA>\n");
+    printf("Root A: 400-500(hz)\n");
+    printf("Standard Root A: 440(hz)\n");
+    return 1;
+  }
   int mn = atoi (argv[1]);
+  double rootA = atof(argv[2]);
+
+  if (rootA < 400 || rootA > 500)
+  {
+    printf("usage: ./ftom <MIDInote> <rootA>\n");
+    printf("Root A: 400-500(hz)\n");
+    printf("Standard Root A: 440(hz)\n");
+    return 1;
+  }
 
   double semitone_ratio;
   double c0; /* for frequency of MIDI Note 0 */
@@ -15,11 +30,11 @@ int main(int argc, char *argv[])
   int midinote; /* given this note */
   float cm;
 
-  /* calculate trequired numbers */
+  /* calculate required numbers */
 
   semitone_ratio = pow(2, 1.0/12.0); /* approx 1.0594631 */
   /* find middle C, three semitones above low A = 220 */
-  c5 = 220.0 * pow(semitone_ratio, 3);
+  c5 = (rootA * 0.5) * pow(semitone_ratio, 3);
 
   /* MIDI Note 0 is C, 5 octaves below Middle C */
   c0 = c5 * pow(0.5, 5);
@@ -29,5 +44,6 @@ int main(int argc, char *argv[])
   frequency = c0 * pow(semitone_ratio, midinote);
 
   printf("MIDI Note %d has frequency %f\n", midinote,frequency);
+  printf("When Root A = %f (hz)\n", rootA);
   return 0;
 }
