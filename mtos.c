@@ -14,7 +14,7 @@ Modify listing 1.2 to print out the lengths of string required for each semitone
 
 int main(int argc, char *argv[])
 {
-
+  if (argc != 2) { printf("usage: ./ftom <MIDInote>\n"); return 1; }
   int mn = atoi (argv[1]);
   double semitone_ratio;
   double c0; /* for frequency of MIDI Note 0 :: really this is C-1 */
