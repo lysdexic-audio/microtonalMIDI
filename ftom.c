@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
   pitchbend = modf(fracmidi, &integral) * 100;
   midinote = integral;
 
-  if (pitchbend > 50.0) midinote += 1; pitchbend = (100-pitchbend)* -1;
+  if (pitchbend > 50.0) { midinote += 1; pitchbend = (100-pitchbend)* -1; }
 
   printf("The nearest MIDI note to the frequency %f is %d\n", frequency, midinote);
   printf("pitchbend = %f%%\n", pitchbend);
