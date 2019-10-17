@@ -5,23 +5,35 @@
 
 int main(int argc, char *argv[])
 {
-  if (argc != 3)
+  if (argc != 4)
   {
-    printf("usage: ./ftom <MIDInote> <rootA>\n");
+    printf("usage: ./mtof <MIDInote> <rootA> <EDOdivision>\n");
     printf("Root A: 400-500(hz)\n");
     printf("Standard Root A: 440(hz)\n");
+    printf("EDOdivision: 1-96\n");
+    printf("Standard EDO: 12");
     return 1;
   }
   int mn = atoi (argv[1]);
   double rootA = atof(argv[2]);
+  float edo = atof(argv[3]);
 
   if (rootA < 400 || rootA > 500)
   {
-    printf("usage: ./ftom <MIDInote> <rootA>\n");
+    printf("usage: ./mtof <MIDInote> <rootA> <EDOdivision>\n");
     printf("Root A: 400-500(hz)\n");
     printf("Standard Root A: 440(hz)\n");
     return 1;
   }
+
+  if (edo < 1 || edo > 96)
+  {
+    printf("usage: ./mtof <MIDInote> <rootA> <EDOdivision>\n");
+    printf("EDOdivision: 1-96\n");
+    printf("Standard EDO: 12");
+    return 1;
+  }
+
 
   double semitone_ratio;
   double c0; /* for frequency of MIDI Note 0 */
@@ -32,7 +44,7 @@ int main(int argc, char *argv[])
 
   /* calculate required numbers */
 
-  semitone_ratio = pow(2, 1.0/12.0); /* approx 1.0594631 */
+  semitone_ratio = pow(2, 1.0 / edo); /* approx 1.0594631 */
   /* find middle C, three semitones above low A = 220 */
   c5 = (rootA * 0.5) * pow(semitone_ratio, 3);
 
@@ -46,5 +58,6 @@ int main(int argc, char *argv[])
   printf("MIDI Note %d has frequency %f\n", midinote,frequency);
   printf("When Root A = %f (hz)\n", rootA);
   if (rootA == 415) { printf("Baroque Pitch\n"); }
+  printf("EDO: %dTET \n", (int)edo);
   return 0;
 }
