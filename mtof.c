@@ -45,5 +45,6 @@ int main(int argc, char *argv[])
 
   printf("MIDI Note %d has frequency %f\n", midinote,frequency);
   printf("When Root A = %f (hz)\n", rootA);
+  if (rootA == 415) { printf("Baroque Pitch\n") }
   return 0;
 }
