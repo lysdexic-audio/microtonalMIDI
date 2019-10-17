@@ -5,7 +5,7 @@
 
 int main(int argc, char *argv[])
 {
-
+  if (argc != 2) { printf("usage: ./ftom <frequencyHZ>\n"); return 1; }
   double freqArg = atof (argv[1]);
   printf("%f\n", freqArg);
   double fracmidi;
